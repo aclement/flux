@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.eclipse.flux</groupId>
+	<artifactId>org.eclipse.flux.cf-deployer.releng</artifactId>
+	<packaging>pom</packaging>
+	<name>Flux Cf Deployer WebApp and Service</name>
+
+	<parent>
+		<groupId>org.eclipse.flux</groupId>
+		<artifactId>org.eclipse.flux.parent.java</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../org.eclipse.flux.parent.java/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+		<module>../flux-cf-deployer</module>
+		<module>../flux-cf-deployer-service</module>
+		<module>../org.eclipse.flux.client.java</module>
+	</modules>
+
+</project>

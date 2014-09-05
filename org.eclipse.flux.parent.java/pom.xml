@@ -13,13 +13,6 @@
 		<java.source.level>1.7</java.source.level>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>local-repo</id>
-			<url>file://${basedir}/lib</url>
-		</repository>
-	</repositories>
-
 	<build>
 		<plugins>
 			<plugin>

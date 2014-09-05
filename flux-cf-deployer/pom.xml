@@ -18,6 +18,15 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
+	<repositories>
+        <repository>
+          <snapshots />
+          <id>snapshots</id>
+          <name>libs-snapshot</name>
+          <url>http://repo.spring.io/libs-snapshot</url>
+        </repository>
+	</repositories>
+        
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
