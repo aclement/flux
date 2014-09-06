@@ -114,8 +114,11 @@ public class DownloadProject {
 			final JSONArray files = response.getJSONArray("files");
 
 			if (this.username.equals(responseUser)) {
+				System.out.println("======== downloadproject createdirs =====");
+
 				for (int i = 0; i < files.length(); i++) {
 					JSONObject resource = files.getJSONObject(i);
+					System.out.println("resource = "+resource);
 
 					String resourcePath = resource.getString("path");
 					long timestamp = resource.getLong("timestamp");
@@ -137,6 +140,7 @@ public class DownloadProject {
 					}
 				}
 
+				System.out.println("======== downloadproject request resources =====");
 				for (int i = 0; i < files.length(); i++) {
 					JSONObject resource = files.getJSONObject(i);
 
@@ -149,6 +153,8 @@ public class DownloadProject {
 						message.put("username", this.username);
 						message.put("project", responseProject);
 						message.put("resource", resourcePath);
+						
+						System.out.println("requesting: "+resource);
 
 						messagingConnector.send("getResourceRequest", message);
 					}
@@ -169,6 +175,8 @@ public class DownloadProject {
 			final long timestamp = response.getLong("timestamp");
 			final String content = response.getString("content");
 
+			System.out.println("resource-response: "+response);
+			
 			if (this.username.equals(responseUser)) {
 				File file = new File(project, resourcePath);
 				IOUtil.pipe(new ByteArrayInputStream(content.getBytes()), file);

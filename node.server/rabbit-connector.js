@@ -44,7 +44,9 @@ var blacklisted = {
 	getProjectRequest: true,
 	getProjectResponse: true,
 	getProjectsRequest: true,
-	getProjectsResponse: true
+	getProjectsResponse: true,
+	serviceRequiredRequest: true,
+	serviceRequiredResponse: true
 };
 function logMsg(pre, type, data) {
 	if (blacklisted[type]) {return; }
@@ -249,7 +251,7 @@ RabbitConnector.prototype.messageReceived = function (msg) {
 		//This mimicks how socketio works.
 		return;
 	}
-	console.log('rabbit ['+self.inbox+'] => ', msg);
+	//console.log('rabbit ['+self.inbox+'] => ', msg);
 
 	var socket = self.socket;
 	socket.emit(msg.type, msg.data);
