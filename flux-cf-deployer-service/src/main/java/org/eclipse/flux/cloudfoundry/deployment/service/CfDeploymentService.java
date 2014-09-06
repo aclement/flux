@@ -61,7 +61,13 @@ public class CfDeploymentService {
 		}
 		return client;
 	}
-	
+	private synchronized void putCfClient(String username, CloudFoundryClientDelegate client) {
+		CloudFoundryClientDelegate existing = cfClients.get(username);
+		if (existing!=null) {
+			throw new IllegalStateException("A client for '"+username+"' already exist. Should reuse it or risk loosing state!");
+		}
+		cfClients.put(username, client);
+	}
 	
 	public void start() {
 		this.flux = fluxClient.connect(fluxConf);
@@ -77,9 +83,15 @@ public class CfDeploymentService {
 				String cfUser = req.getString(CF_USERNAME);
 				String password = req.getString(CF_PASSWORD);
 				System.out.println("user="+user);
-
-				CloudFoundryClientDelegate client = new CloudFoundryClientDelegate(user, cfUser, password, cloudControllerUrl, null, flux);
-				cfClients.put(user, client);
+				CloudFoundryClientDelegate oldClient = getCfClient(user, null);
+				synchronized (CfDeploymentService.this) {
+					if (oldClient!=null) {
+						oldClient.login(cfUser, password);
+					} else {
+						CloudFoundryClientDelegate client = new CloudFoundryClientDelegate(user, cfUser, password, cloudControllerUrl, null, flux);
+						putCfClient(user, client);
+					}
+				}
 				res.put(OK, true);
 				return res;
 			}

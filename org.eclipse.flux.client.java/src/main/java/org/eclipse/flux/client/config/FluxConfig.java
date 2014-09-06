@@ -55,7 +55,11 @@ public class FluxConfig {
 	public static FluxConfig defaultConfig() {
 		return new FluxConfig(envHost(), envLogin(), envToken());
 	}
-
+	
+	public static FluxConfig superConfig() {
+		return new FluxConfig(envHost(), "$super$", envToken());
+	}
+	
 	private static String envToken() {
 		String token = System.getProperty("flux-token");
 		if (token==null) {

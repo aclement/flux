@@ -10,6 +10,14 @@
 *******************************************************************************/
 package org.eclipse.flux.cloudfoundry.deployment.service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.Buffer;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 import org.eclipse.flux.client.FluxClient;
 import org.eclipse.flux.client.config.FluxConfig;
 
@@ -22,8 +30,12 @@ public class CfDeploymentServiceMain {
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		CfDeploymentService instance = new CfDeploymentService(FluxClient.DEFAULT_INSTANCE, FluxConfig.defaultConfig());
+		LogManager.getLogManager().reset();
+//		Logger.getLogger("socket.io").setLevel(Level.INFO);
+//		
+//		LogManager.getLogManager().
+//		LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.OFF); 
+		CfDeploymentService instance = new CfDeploymentService(FluxClient.DEFAULT_INSTANCE, FluxConfig.superConfig());
 		instance.start();
 	}
-	
 }

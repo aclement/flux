@@ -69,6 +69,13 @@ public class CloudFoundryClientDelegate {
 		return orgSpace.split("/");
 	}
 
+	public synchronized void login(String cfUser, String password) {
+		this.cfUser = cfUser;
+		this.password = password;
+		this.client = null; //guarantees this delegate is not usuable anymore if (re)login fails.
+		this.client = createClient(cfUser, password, cloudControllerUrl, orgSpace);
+	}
+
 	public synchronized void push(String appName, File location) {
 		CloudFoundryClient client = this.client;
 		final CloudFoundryApplication localApp = new CloudFoundryApplication(
@@ -172,7 +179,6 @@ public class CloudFoundryClientDelegate {
 
 	protected void addLogListener(String appName) {
 		if (appName != null && !activeApplicationLogs.containsKey(appName)) {
-
 			handleMessage(DEPLOYMENT_SERVICE_LABEL
 					+ " - Initialising Loggregator support for - " + appName
 					+ '\n', MessageConstants.CF_STREAM_STDOUT, appName);
@@ -264,7 +270,7 @@ public class CloudFoundryClientDelegate {
 			String appName) {
 		try {
 
-			System.out.println(message);
+//			System.out.println(message);
 
 			if (connector != null) {
 				JSONObject json = new JSONObject();
@@ -280,6 +286,7 @@ public class CloudFoundryClientDelegate {
 				}
 				json.put(MessageConstants.CF_MESSAGE, message);
 				json.put(MessageConstants.CF_STREAM, streamType);
+				System.out.println(streamType+": "+message);
 
 				connector.send(MessageConstants.CF_APP_LOG, json);
 			}

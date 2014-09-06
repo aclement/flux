@@ -42,7 +42,7 @@ require(['socket', 'jquery'], function (socket) {
 	}
 	
 	socket.on('cfAppLog', function (msg) {
-		console.log('cfAppLog', msg);
+//		console.log('cfAppLog', msg);
 		logAppend(msg.stream, msg.msg);
 //		logAppend("STDOUT", "Changed ["+msg.timestamp+"] "+msg.project+"/"+msg.resource);
 	});
